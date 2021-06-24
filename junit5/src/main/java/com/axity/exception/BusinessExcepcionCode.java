@@ -7,7 +7,10 @@ package com.axity.exception;
  */
 public enum BusinessExcepcionCode
 {
-  INVALID_DATA("001"), DB_INTEGRITY("002"), UNKOWN_EXCEPTION("003"), DIVISION_BY_ZERO("004");
+  INVALID_DATA("001"), DB_INTEGRITY("002"), UNKOWN_EXCEPTION("003"), DIVISION_BY_ZERO("004")
+  , LDAP_USER_INVALID("005"),LDAP_USER_WITHOUT_ROLES("006"),
+  LDAP_ERROR("007")
+  ;
 
   private String code;
 

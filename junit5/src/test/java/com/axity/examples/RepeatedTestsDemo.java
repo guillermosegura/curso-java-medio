@@ -56,5 +56,11 @@ class RepeatedTestsDemo
   {
     // ...
   }
+  
+  @RepeatedTest(value = 5, name = "Repetici\u00F3n {currentRepetition} de {totalRepetitions}")
+  void repeatedTestInSpanish()
+  {
+    // ...
+  }
 
 }

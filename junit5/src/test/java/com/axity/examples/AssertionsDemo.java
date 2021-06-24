@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.concurrent.CountDownLatch;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.axity.exception.BusinessExcepcion;
@@ -41,7 +42,8 @@ class AssertionsDemo
   {
     // In a grouped assertion all assertions are executed, and all
     // failures will be reported together.
-    assertAll( "person", () -> assertEquals( "Jane", person.getFirstName() ),
+    assertAll( "person", 
+      () -> assertEquals( "Jane", person.getFirstName() ),
       () -> assertEquals( "Doe", person.getLastName() ) );
   }
 
@@ -55,7 +57,8 @@ class AssertionsDemo
       assertNotNull( firstName );
 
       // Executed only if the previous assertion is valid.
-      assertAll( "first name", () -> assertTrue( firstName.startsWith( "J" ) ),
+      assertAll( "first name", 
+        () -> assertTrue( firstName.startsWith( "J" ) ),
         () -> assertTrue( firstName.endsWith( "e" ) ) );
     }, () -> {
       // Grouped assertion, so processed independently
@@ -64,7 +67,8 @@ class AssertionsDemo
       assertNotNull( lastName );
 
       // Executed only if the previous assertion is valid.
-      assertAll( "last name", () -> assertTrue( lastName.startsWith( "D" ) ),
+      assertAll( "last name", 
+        () -> assertTrue( lastName.startsWith( "D" ) ),
         () -> assertTrue( lastName.endsWith( "e" ) ) );
     } );
   }
@@ -80,9 +84,11 @@ class AssertionsDemo
   void timeoutNotExceeded()
   {
     // The following assertion succeeds.
-    assertTimeout( ofMinutes( 2 ), () -> {
+    assertTimeout( ofMinutes( 20 ), () -> {
       // Perform task that takes less than 2 minutes.
+      Thread.sleep( 100 );
     } );
+ 
   }
 
   @Test
@@ -115,6 +121,7 @@ class AssertionsDemo
   }
 
   @Test
+  @Disabled("Lo deshabilito por algo")
   void timeoutExceededWithPreemptiveTermination()
   {
     // The following assertion fails with an error message similar to:
