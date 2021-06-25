@@ -27,7 +27,7 @@ public class Office implements Serializable
   private String state;
   private String country;
   @JsonProperty("zip")
-  @JsonAlias("postalCode")
+//  @JsonAlias("postalCode")
   private String postalCode;
   private String territory;
 
