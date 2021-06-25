@@ -4,8 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Base64;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.axity.exception.BusinessExcepcion;
 import com.axity.exception.BusinessExcepcionCode;
@@ -19,10 +24,10 @@ import com.axity.to.User;
  */
 public class UserServiceTest
 {
-
+  private static final Logger LOG = LoggerFactory.getLogger( UserServiceTest.class );
   private UserService userService;
   @Before
-  public void setUp() 
+  public void setUp()
   {
     this.userService = new UserServiceImpl();
   }
@@ -107,6 +112,8 @@ public class UserServiceTest
     }
     catch( BusinessExcepcion e )
     {
+      LOG.error( "{}", Base64.getEncoder().encodeToString( ExceptionUtils.getStackTrace( e ).getBytes() ) );
+
       assertEquals( BusinessExcepcionCode.INVALID_DATA, e.getCode() );
       throw e;
     }
