@@ -1,24 +1,28 @@
 package com.axity.services;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import com.axity.services.impl.PortfolioServiceImpl;
 import com.axity.to.Stock;
 
-@RunWith(MockitoJUnitRunner.class)
-public class PortfolioServiceTest
+@ExtendWith(MockitoExtension.class)
+// @MockitoSettings(strictness = Strictness.LENIENT)
+class PortfolioServiceTest
 {
 
   @InjectMocks
@@ -27,23 +31,13 @@ public class PortfolioServiceTest
   @Mock
   private StockService stockService;
 
-  @Before
-  public void setUp()
+  @BeforeEach
+  void setUp() throws Exception
   {
   }
 
   @Test
-  public void test()
-  {
-    List<String> mockList = Mockito.mock( List.class );
-    mockList.add( "one" );
-    Mockito.verify( mockList ).add( "one" );
-    when( mockList.size() ).thenReturn( 1 );
-    assertEquals( 1, mockList.size() );
-  }
-
-  @Test
-  public void testGetMarketValue()
+  void testGetMarketValue()
   {
     // Creates a list of stocks to be added to the portfolio
     List<Stock> stocks = new ArrayList<Stock>();
@@ -57,8 +51,8 @@ public class PortfolioServiceTest
     portfolioService.setStocks( stocks );
 
     // mock the behavior of stock service to return the value of various stocks
-    when( stockService.getPrice( googleStock ) ).thenReturn( 50.00 );
-    when( stockService.getPrice( microsoftStock ) ).thenReturn( 1000.00 );
+    lenient().when( stockService.getPrice( ArgumentMatchers.eq( googleStock ) ) ).thenReturn( 50.00 );
+    lenient().when( stockService.getPrice( ArgumentMatchers.eq( microsoftStock ) ) ).thenReturn( 1000.00 );
 
     double marketValue = portfolioService.getMarketValue();
 

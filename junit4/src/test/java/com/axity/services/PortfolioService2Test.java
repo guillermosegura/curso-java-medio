@@ -1,6 +1,7 @@
 package com.axity.services;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -8,38 +9,33 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import com.axity.services.impl.PortfolioServiceImpl;
 import com.axity.to.Stock;
 
-@RunWith(MockitoJUnitRunner.class)
-public class PortfolioServiceTest
+public class PortfolioService2Test
 {
 
-  @InjectMocks
-  private PortfolioService portfolioService = new PortfolioServiceImpl();
-
-  @Mock
+  private PortfolioService portfolioService;
   private StockService stockService;
 
   @Before
   public void setUp()
   {
-  }
+    portfolioService = new PortfolioServiceImpl();
 
+    stockService = mock( StockService.class );
+    portfolioService.setStockService( stockService);
+  }
+  
   @Test
-  public void test()
-  {
+  public void test() {
     List<String> mockList = Mockito.mock( List.class );
-    mockList.add( "one" );
-    Mockito.verify( mockList ).add( "one" );
-    when( mockList.size() ).thenReturn( 1 );
-    assertEquals( 1, mockList.size() );
+    mockList.add("one");
+    Mockito.verify(mockList).add("one");
+    when(mockList.size()).thenReturn( 1 );
+    assertEquals(1, mockList.size());
   }
 
   @Test

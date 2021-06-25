@@ -28,8 +28,9 @@ class UserServiceTest
     userService = new UserServiceImpl();
 
     ldapService = Mockito.mock( LdapService.class );
-    ReflectionTestUtils.setField( userService, "ldapService", ldapService );
+     ReflectionTestUtils.setField( userService, "ldapService", ldapService );
 
+//    ((UserServiceImpl) userService).setLdapService( ldapService );
   }
 
   @Test
@@ -71,7 +72,8 @@ class UserServiceTest
     Mockito.doThrow( be ).when( ldapService ).authenticate( ArgumentMatchers.anyString(),
       ArgumentMatchers.anyString() );
 
-    BusinessExcepcion result = assertThrows( BusinessExcepcion.class, () -> userService.validate( user ) );
+    BusinessExcepcion result = assertThrows( BusinessExcepcion.class, 
+      () -> userService.validate( user ) );
     assertEquals( BusinessExcepcionCode.LDAP_ERROR, result.getCode() );
   }
 

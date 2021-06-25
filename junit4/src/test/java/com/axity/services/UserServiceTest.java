@@ -22,7 +22,7 @@ public class UserServiceTest
 
   private UserService userService;
   @Before
-  public void setUp() throws Exception
+  public void setUp() 
   {
     this.userService = new UserServiceImpl();
   }

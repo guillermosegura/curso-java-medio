@@ -65,4 +65,9 @@ public class UserServiceImpl implements UserService
     return null;
   }
 
+  public void setLdapService( LdapService ldapService )
+  {
+    this.ldapService = ldapService;
+  }
+
 }
