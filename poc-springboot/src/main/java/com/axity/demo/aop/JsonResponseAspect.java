@@ -40,7 +40,7 @@ public class JsonResponseAspect implements HandlerInterceptor
         if( responseEntity.getStatusCode().equals( HttpStatus.OK )
             || responseEntity.getStatusCode().equals( HttpStatus.CREATED ) )
         {
-          GenericResponse genericResponse = new GenericResponse();
+          GenericResponse<Serializable> genericResponse = new GenericResponse<>();
           genericResponse.setBody( (Serializable) responseEntity.getBody() );
           Header header = new Header();
           header.setMessage( "OK" );
@@ -50,7 +50,7 @@ public class JsonResponseAspect implements HandlerInterceptor
         }
         else
         {
-          GenericResponse genericResponse = new GenericResponse();
+          GenericResponse<Serializable> genericResponse = new GenericResponse<>();
           genericResponse.setBody( (Serializable) responseEntity.getBody() );
           result = new ResponseEntity<>( genericResponse, responseEntity.getStatusCode() );
         }

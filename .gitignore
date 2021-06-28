@@ -10,3 +10,6 @@
 /concurrencia/.settings
 /concurrencia/target
 /concurrencia/.classpath
+/poc-hello/.mvn
+/poc-springboot/.mvn
+/hello2/.mvn

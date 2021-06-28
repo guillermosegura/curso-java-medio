@@ -56,8 +56,10 @@ class OfficeControllerTest
     }
     value.setResponse( response );
     when( officeService.getOffices( 0, 20 ) ).thenReturn( value );
-
-    MvcResult result = mockMvc.perform( MockMvcRequestBuilders.get( "/api/v1/offices" ) ).andExpect( status().isOk() )
+    
+    MvcResult result = mockMvc.perform( 
+      MockMvcRequestBuilders.get( "/api/v1/offices" ) )
+        .andExpect( status().isOk() )
         .andExpect( jsonPath( "$.body.page" ).value( "0" ) )
         .andExpect( jsonPath( "$.body.pageSize" ).value( "20" ) )
         .andExpect( jsonPath( "$.body.response" ).isArray() )
@@ -104,7 +106,9 @@ class OfficeControllerTest
     office.setOfficeCode( "1" );
     when( officeService.getOffice( "1" ) ).thenReturn( office );
 
-    MvcResult result = mockMvc.perform( MockMvcRequestBuilders.get( "/api/v1/offices/1" ) ).andExpect( status().isOk() )
+    MvcResult result = mockMvc.perform( 
+      MockMvcRequestBuilders.get( "/api/v1/offices/1" ) )
+        .andExpect( status().isOk() )
         .andExpect( jsonPath( "$.body.officeCode" ).value( "1" ) ).andReturn();
 
     assertNotNull( result );
@@ -120,8 +124,29 @@ class OfficeControllerTest
     
     when( officeService.getOffice( "9999" ) ).thenThrow( be );
 
-    MvcResult result = mockMvc.perform( MockMvcRequestBuilders.get( "/api/v1/offices/9999" ) )
-        .andExpect( status().isNoContent())
+    MvcResult result = mockMvc.perform( 
+      MockMvcRequestBuilders.get( "/api/v1/offices/9999" ) )
+        .andExpect( status().isNotFound())
+        .andExpect( jsonPath("$.header.status").value( "001") )
+        .andReturn();
+
+    assertNotNull( result );
+
+  }
+  
+  
+  @Test
+  void testGetOffice_unknownException() throws Exception
+  {
+
+    RuntimeException re = new RuntimeException( "Oooops!!!!" );
+    
+    when( officeService.getOffice( "9999" ) ).thenThrow( re );
+
+    MvcResult result = mockMvc.perform( 
+      MockMvcRequestBuilders.get( "/api/v1/offices/9999" ) )
+        .andExpect( status().is5xxServerError())
+        .andExpect( jsonPath("$.header.status").value( "902") )
         .andReturn();
 
     assertNotNull( result );

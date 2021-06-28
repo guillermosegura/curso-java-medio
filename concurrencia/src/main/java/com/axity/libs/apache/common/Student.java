@@ -33,7 +33,8 @@ public class Student implements Comparable<Student>
     {
       Student that = (Student) object;
 
-      isEquals = new EqualsBuilder().append( this.name, that.name ).append( this.lastname, that.lastname )
+      isEquals = new EqualsBuilder()
+          .append( this.name, that.name ).append( this.lastname, that.lastname )
           .append( this.age, that.age ).isEquals();
 
     }

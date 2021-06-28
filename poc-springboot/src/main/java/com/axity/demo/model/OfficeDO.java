@@ -1,11 +1,16 @@
 package com.axity.demo.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -14,9 +19,15 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"employees"})
 @Entity
 @Table(name = "offices")
+@NamedQueries({
+  @NamedQuery(name="OfficeDO.findAll", 
+        query = "SELECT o FROM OfficeDO o"),
+  @NamedQuery(name="OfficeDO.findById", 
+        query = "SELECT o FROM OfficeDO o WHERE o.officeCode = :officeCode"),
+})
 public class OfficeDO implements Serializable
 {
 
@@ -50,8 +61,8 @@ public class OfficeDO implements Serializable
   @Column(name = "territory", nullable = false, length = 10)
   private String territory;
   
-//  @OneToMany(mappedBy = "office", fetch = FetchType.LAZY)
-//  private List<EmployeeDO> employees;
+  @OneToMany(mappedBy = "office", fetch = FetchType.LAZY)
+  private List<EmployeeDO> employees;
 
   @Override
   public boolean equals( Object object )
