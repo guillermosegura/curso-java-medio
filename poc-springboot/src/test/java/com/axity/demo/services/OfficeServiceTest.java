@@ -30,7 +30,7 @@ import com.axity.demo.to.PaginatedResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.NONE)
 class OfficeServiceTest
 {
 
