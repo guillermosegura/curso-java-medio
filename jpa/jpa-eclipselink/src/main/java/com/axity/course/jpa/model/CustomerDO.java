@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +14,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Entidad de la tabla customers
@@ -23,6 +28,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "customers")
+@NamedQueries({
+  @NamedQuery(name="CustomerDO.findCustomersByCountry", 
+      query = "SELECT o FROM CustomerDO o WHERE o.country = :country"),
+  @NamedQuery(name="CustomerDO.findCustomersByEmployeeNumber",
+    query = "SELECT o FROM CustomerDO o JOIN o.salesRepEmployee e "
+        + " WHERE e.employeeNumber = :employeeNumber")
+  
+})
 public class CustomerDO implements Serializable
 {
 
@@ -318,5 +331,23 @@ public class CustomerDO implements Serializable
   public int hashCode()
   {
     return Objects.hash( this.customerNumber );
+  }
+  
+  @Override
+  public String toString() {
+    return new ToStringBuilder( this )
+        .append("customerNumber", this.customerNumber)
+        .append("customerName", this.customerName)
+        .append("contactLastName", this.contactLastName)
+        .append("contactFirstName", this.contactFirstName)
+        .append("phone", this.phone)
+        .append("addressLine1", this.addressLine1)
+        .append("addressLine2", this.addressLine2)
+        .append("city", this.city)
+        .append("state", this.state)
+        .append("postalCode", this.postalCode)
+        .append("country", this.country)
+        .append("creditLimit", this.creditLimit)
+        .toString();
   }
 }

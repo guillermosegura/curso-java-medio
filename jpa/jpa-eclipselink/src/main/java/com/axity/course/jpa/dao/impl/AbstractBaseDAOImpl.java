@@ -114,7 +114,6 @@ public abstract class AbstractBaseDAOImpl<T extends Serializable, I extends Seri
    * @param i
    * @return
    */
-  @SuppressWarnings("unchecked")
   public T find( I i )
   {
     validateEntityManager();

@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * Entidad de la tabla employees
  * 
@@ -241,6 +243,18 @@ public class EmployeeDO implements Serializable
   public int hashCode()
   {
     return Objects.hash( this.employeeNumber );
+  }
+  
+  @Override
+  public String toString() {
+    return new ToStringBuilder( this )
+        .append( "employeeNumber", this.employeeNumber )
+        .append( "lastName", this.lastName )
+        .append( "firstName", this.firstName )
+        .append( "extension", this.extension )
+        .append( "email", this.email )
+        .append( "jobTitle", this.jobTitle )
+        .toString();
   }
 
 }

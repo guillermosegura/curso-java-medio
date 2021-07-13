@@ -4,4 +4,91 @@
   xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
   version="1.0">
 
+  <!-- Employees -->
+  <named-query name="EmployeeDO.findEmployeesByOfficeCode">
+    <query>
+      SELECT e
+      FROM EmployeeDO e
+      INNER JOIN e.office o
+      WHERE o.officeCode = :officeCode
+    </query>
+  </named-query>
+
+  <named-query name="EmployeeDO.findEmployeesByOfficeCountry">
+    <query>
+      SELECT e
+      FROM EmployeeDO e
+      INNER JOIN e.office o
+      WHERE o.country = :country
+    </query>
+  </named-query>
+
+  <named-query name="EmployeeDO.findEmployeeByReportsTo">
+    <query>
+      SELECT e
+      FROM EmployeeDO e
+      WHERE e.reportsTo.employeeNumber = :reportsTo
+    </query>
+  </named-query>
+  
+  
+  <named-query name="CustomerDO.findCustomerReportAll">
+    <query>
+      SELECT 
+        c.customerNumber,
+        c.customerName,
+        c.contactLastName,
+        c.contactFirstName,
+        c.phone,
+        c.country,
+        e.employeeNumber,
+        e.lastName,
+        e.firstName,
+        e.email,
+        e.extension,
+        e.jobTitle,
+        o.officeCode,
+        o.city,
+        o.phone,
+        o.territory
+      FROM CustomerDO c
+        INNER JOIN c.salesRepEmployee e
+        INNER JOIN e.office o 
+      ORDER BY c.customerName
+    </query>
+  </named-query>
+  
+  <named-query name="CustomerDO.findCustomerReportByParam">
+    <query>
+      SELECT 
+        c.customerNumber,
+        c.customerName,
+        c.contactLastName,
+        c.contactFirstName,
+        c.phone,
+        c.country,
+        e.employeeNumber,
+        e.lastName,
+        e.firstName,
+        e.email,
+        e.extension,
+        e.jobTitle,
+        o.officeCode,
+        o.city,
+        o.phone,
+        o.country,
+        o.territory
+      FROM CustomerDO c
+        INNER JOIN c.salesRepEmployee e
+        INNER JOIN e.office o 
+      WHERE 1 = 1
+        AND ( :name IS NULL OR LOWER(c.customerName) LIKE CONCAT ('%', LOWER(:name), '%') )
+        AND ( :country IS NULL OR LOWER(c.country) LIKE CONCAT ('%', LOWER(:country), '%') )
+        AND ( :employeeNumber IS NULL OR e.employeeNumber = :employeeNumber) 
+        AND ( :employeeOfficeCountry IS NULL OR LOWER(o.country) LIKE CONCAT ('%', LOWER(:employeeOfficeCountry), '%') )
+        AND ( :employeeOfficeTerritory IS NULL OR LOWER(o.territory) LIKE CONCAT ('%', LOWER(:employeeOfficeTerritory), '%') )  
+      ORDER BY c.customerName
+    </query>
+  </named-query>
+
 </entity-mappings>
