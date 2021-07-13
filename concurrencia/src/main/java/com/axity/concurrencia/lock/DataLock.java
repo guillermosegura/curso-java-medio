@@ -39,16 +39,22 @@ public class DataLock
   public int consumeNumber()
   {
 
-    queueLock.lock();
-
-    Integer n = -1;
-    if( !this.data.isEmpty() )
+    try
     {
-      n = this.data.remove( 0 );
-    }
-    queueLock.unlock();
+      queueLock.lock();
 
-    return n;
+      Integer n = -1;
+      if( !this.data.isEmpty() )
+      {
+        n = this.data.remove( 0 );
+      }
+      return n;
+    }
+    finally
+    {
+      queueLock.unlock();
+    }
+
 
   }
 

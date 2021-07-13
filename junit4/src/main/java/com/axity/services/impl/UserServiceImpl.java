@@ -5,77 +5,84 @@ import org.slf4j.LoggerFactory;
 
 import com.axity.exception.BusinessExcepcion;
 import com.axity.exception.BusinessExcepcionCode;
+import com.axity.services.LdapService;
 import com.axity.services.UserService;
 import com.axity.to.User;
 
 public class UserServiceImpl implements UserService
 {
   private static final Logger LOG = LoggerFactory.getLogger( UserServiceImpl.class );
+
+  private LdapService ldapService;
+
   public UserServiceImpl()
   {
+
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean validate( User user )
   {
-
-    isValidUser( user );
-
-    isValidUsername( user );
-
     boolean isValid = false;
     try
     {
-      if( LdapEmulator.exists( user.getUsername() ) )
-      {
-        isValidPassword( user );
 
-        isValid = LdapEmulator.isValid( user.getUsername(), user.getPassword() );
-      }
+      validateUserNotNull( user );
+      validateUsernameNotNull( user );
+      validatePasswordNotNull( user );
+
+      isValid = ldapService.authenticate( user.getUsername(), user.getPassword() );
     }
     catch( BusinessExcepcion e )
     {
-      if( e.getCode().equals( BusinessExcepcionCode.LDAP_ERROR ) )
+      LOG.error( e.getMessage() );
+      LOG.error( "{}", e.getCode() );
+
+      if( !e.getCode().equals( BusinessExcepcionCode.LDAP_ERROR ) )
       {
-        LOG.error( e.getMessage(), e );
+        throw e;
       }
-      throw e;
     }
 
     return isValid;
   }
 
-  private void isValidPassword( User user )
+  private void validatePasswordNotNull( User user )
   {
     if( user.getPassword() == null )
     {
-      LOG.warn( "Password nulo" );
       BusinessExcepcion be = new BusinessExcepcion( "Password nulo" );
       be.setCode( BusinessExcepcionCode.INVALID_DATA );
       throw be;
     }
   }
 
-  private void isValidUsername( User user )
+  private void validateUsernameNotNull( User user )
   {
     if( user.getUsername() == null )
     {
-      LOG.warn( "Username nulo" );
       BusinessExcepcion be = new BusinessExcepcion( "Username nulo" );
       be.setCode( BusinessExcepcionCode.INVALID_DATA );
       throw be;
     }
   }
 
-  private void isValidUser( User user )
+  private void validateUserNotNull( User user )
   {
     if( user == null )
     {
-      LOG.warn( "Password nulo" );
-      BusinessExcepcion be = new BusinessExcepcion( "Password nulo" );
+      BusinessExcepcion be = new BusinessExcepcion( "Usuario nulo" );
       be.setCode( BusinessExcepcionCode.INVALID_DATA );
       throw be;
     }
+  }
+
+  public void setLdapService( LdapService ldapService )
+  {
+    this.ldapService = ldapService;
   }
 
 }

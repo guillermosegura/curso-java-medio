@@ -1,11 +1,17 @@
 package com.axity.examples;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +21,7 @@ class RepeatedTestsDemo
 
   private static final Logger LOG = LoggerFactory.getLogger( RepeatedTestsDemo.class );
 
+  private Set<String> uudis = new HashSet<>();
   @BeforeEach
   void beforeEach( TestInfo testInfo, RepetitionInfo repetitionInfo )
   {
@@ -28,7 +35,11 @@ class RepeatedTestsDemo
   @RepeatedTest(10)
   void repeatedTest()
   {
-    // ...
+      String uuid = UUID.randomUUID().toString();
+
+      assertFalse( uudis.contains( uuid ) );
+      uudis.add( uuid );
+
   }
 
   @RepeatedTest(5)
@@ -56,7 +67,7 @@ class RepeatedTestsDemo
   {
     // ...
   }
-  
+
   @RepeatedTest(value = 5, name = "Repetici\u00F3n {currentRepetition} de {totalRepetitions}")
   void repeatedTestInSpanish()
   {

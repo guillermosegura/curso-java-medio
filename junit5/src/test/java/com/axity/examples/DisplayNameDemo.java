@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class DisplayNameDemo {
 
     @Test
-    @DisplayName("Custom test name containing spaces")
+    @DisplayName("Lorem ipsum dolor")
     void testWithDisplayNameContainingSpaces() {
     }
 
@@ -19,6 +19,12 @@ class DisplayNameDemo {
     @Test
     @DisplayName("😱")
     void testWithDisplayNameContainingEmoji() {
+    }
+    
+    
+    @Test
+    public void testMiTestSuperImposible_casoAlterno() {
+      
     }
 
 }

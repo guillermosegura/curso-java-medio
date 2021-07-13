@@ -8,7 +8,7 @@ public class DataMain
     Data data = new Data();
     
     new Producer( data );
-    Thread.sleep( 300L );
+    Thread.sleep( 500L );
     new Consumer( data, "Consumer 1" );
     new Consumer( data, "Consumer 2" );
     new Consumer( data, "Consumer 3" );

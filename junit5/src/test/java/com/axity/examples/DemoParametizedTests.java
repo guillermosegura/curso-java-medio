@@ -19,14 +19,14 @@ class DemoParametizedTests
 
   @ParameterizedTest
   @ValueSource(strings = { "racecar", "radar", "able was I ere I saw elba" })
-  void palindromes( String candidate )
+  public void palindromes( String candidate )
   {
     assertTrue( PalindromeUtils.isPalindrome( candidate ) );
   }
 
   @ParameterizedTest
   @NullSource
-  void isNull_ShouldReturnTrueForNullInputs( String input )
+  public void isNull_ShouldReturnTrueForNullInputs( String input )
   {
     assertNull( input );
   }

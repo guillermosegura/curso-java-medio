@@ -11,9 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import com.axity.exception.BusinessExcepcion;
 import com.axity.exception.BusinessExcepcionCode;
@@ -42,9 +44,13 @@ class AssertionsDemo
   {
     // In a grouped assertion all assertions are executed, and all
     // failures will be reported together.
-    assertAll( "person", 
-      () -> assertEquals( "Jane", person.getFirstName() ),
-      () -> assertEquals( "Doe", person.getLastName() ) );
+    assertAll( "person",() -> assertNotNull( person ), 
+      () -> assertEquals( "Janeth", person.getFirstName() ),
+       
+      () -> assertEquals( "Does", person.getLastName() ) );
+
+//    assertEquals( "Jane", person.getFirstName() );
+//    assertEquals( "Does", person.getLastName() );
   }
 
   @Test
@@ -52,6 +58,7 @@ class AssertionsDemo
   {
     // Within a code block, if an assertion fails the
     // subsequent code in the same block will be skipped.
+    person.setFirstName( "Emmily" );
     assertAll( "properties", () -> {
       String firstName = person.getFirstName();
       assertNotNull( firstName );
@@ -76,7 +83,8 @@ class AssertionsDemo
   @Test
   void exceptionTesting()
   {
-    BusinessExcepcion exception = assertThrows( BusinessExcepcion.class, () -> arithmeticService.divide( 1, 0 ) );
+    BusinessExcepcion exception = 
+        assertThrows( BusinessExcepcion.class, () -> arithmeticService.divide( 1, 0 ) );
     assertEquals( BusinessExcepcionCode.DIVISION_BY_ZERO, exception.getCode() );
   }
 
@@ -88,7 +96,7 @@ class AssertionsDemo
       // Perform task that takes less than 2 minutes.
       Thread.sleep( 100 );
     } );
- 
+
   }
 
   @Test

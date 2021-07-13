@@ -41,6 +41,8 @@ public class AnotherThread extends Thread
   public void start()
   {
     LOG.info( "Starting {}", threadName );
+    
+   
 
     if( this.thread == null )
     {

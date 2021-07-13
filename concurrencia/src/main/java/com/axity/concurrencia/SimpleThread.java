@@ -27,7 +27,7 @@ public class SimpleThread implements Runnable
       {
         LOG.info( "Thread: {}, {}", threadName, i );
         // Let the thread sleep for a while.
-        Thread.sleep( 50 );
+        Thread.sleep( ((long) (Math.random() * 10)) );
       }
     }
     catch( InterruptedException e )

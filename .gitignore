@@ -13,3 +13,11 @@
 /poc-hello/.mvn
 /poc-springboot/.mvn
 /hello2/.mvn
+/jpa/jpa-eclipselink/.project
+/jpa/jpa-eclipselink/.settings
+/jpa/jpa-eclipselink/target
+/jpa/jpa-eclipselink/.classpath
+/jpa/jpa-hibernate/.project
+/jpa/jpa-hibernate/.settings
+/jpa/jpa-hibernate/target
+/jpa/jpa-hibernate/.classpath

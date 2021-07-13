@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,17 @@ public class ArithmeticServiceTest
     double result = arithmeticService.substract( a, b );
 
     assertEquals( 0.0, result, 0.1 );
+  }
+  
+// Esta prueba vala el escenario HU-0001
+  /**
+   * JIRA-1456
+   * <br>Caso base 001
+   */
+  @Test
+  @Ignore
+  public void testSubstractCasoAlterno1() {
+    
   }
 
   @Test

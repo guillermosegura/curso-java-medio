@@ -18,7 +18,8 @@ public class PortfolioServiceImpl implements PortfolioService
 
     for( Stock stock : stocks )
     {
-      marketValue += stockService.getPrice( stock ) * stock.getQuantity();
+      double price = stockService.getPrice( stock );
+      marketValue += price * stock.getQuantity();
     }
     return marketValue;
   }

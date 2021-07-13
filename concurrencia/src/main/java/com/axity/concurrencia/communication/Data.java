@@ -25,6 +25,7 @@ public class Data
     {
       try
       {
+        LOG.info( "Se pone en espera " );
         wait();
       }
       catch( InterruptedException e )
@@ -46,6 +47,7 @@ public class Data
     {
       try
       {
+        LOG.info( "Se pone en espera " );
         wait();
       }
       catch( InterruptedException e )
